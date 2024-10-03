@@ -6,7 +6,7 @@ os.system('cls')
 def pindah_lokasi(lokasi):
     hasil_dadu = randint(1, 6)
     print()
-    print("Dadu yang muncul -> {}".format(hasil_dadu))
+    print("The dice rolled -> {}".format(hasil_dadu))
     lokasi = lokasi + hasil_dadu
     return lokasi
 
@@ -18,13 +18,13 @@ def cek_harga(nama, negara, index, data_pemain, data_negara):
     harga_hotel = data_negara[index]['harga_hotel']
     total_rumah = harga_rumah*jumlah_rumah
     total_hotel = harga_hotel*jumlah_hotel
-    total = harga_tanah + total_rumah +total_hotel
+    total = harga_tanah + total_rumah + total_hotel
     print()
-    print("NEGARA {}".format(negara.upper()))
+    print("COUNTRY {}".format(negara.upper()))
     print("--------------------------------------")
-    print("Harga Tanah {:<21}: {}".format(" ", idr_to_string(harga_tanah)))
-    print("Harga Rumah {:<3} x {:<14} : {}".format(str(jumlah_rumah), idr_to_string(harga_rumah), idr_to_string(total_rumah)))
-    print("Harga Hotel {:<3} x {:<14} : {}".format(str(jumlah_hotel), idr_to_string(harga_hotel), idr_to_string(total_hotel)))
+    print("Land Price {:<21}: {}".format(" ", idr_to_string(harga_tanah)))
+    print("House Price {:<3} x {:<14} : {}".format(str(jumlah_rumah), idr_to_string(harga_rumah), idr_to_string(total_rumah)))
+    print("Hotel Price {:<3} x {:<14} : {}".format(str(jumlah_hotel), idr_to_string(harga_hotel), idr_to_string(total_hotel)))
     print("-------------------------------------------  + ")
     print("Total {}> {}".format("-"*27, idr_to_string(total)))
     return total
@@ -38,7 +38,7 @@ def tampilkan_aset(nama_pemilik, data_pemain, data_negara):
     for negara in list_negara:
         print(negara.upper())
         print("---------------")
-        print("Rumah : {:<8}".format(str(data_pemain[nama_pemilik]['asset'][negara]['rumah'])))
+        print("House : {:<8}".format(str(data_pemain[nama_pemilik]['asset'][negara]['rumah'])))
         print("Hotel : {:<8}".format(str(data_pemain[nama_pemilik]['asset'][negara]['hotel'])))
         print()
 
@@ -72,7 +72,7 @@ def idr_to_string(nominal):
 
 data_pemain = {}
 data_negara = {}
-pemenang = "Tidak Ada"
+pemenang = "No Winner"
 
 
 pattern = r"(.*)\,(.*)\,(.*)\,(.*)\,(.*)\,(.*)\,(.*)\,(.*)"
@@ -92,20 +92,20 @@ with open('monopoli_data.csv', 'r') as file:
         sewa_hotel = int(hasil_regex[7])
         status_kepemilikan = hasil_regex[8]
 
-        i+=1
+        i += 1
 
         data_negara[i] = {'nama_negara' : nama_negara, 'harga_tanah' : harga_tanah, 'harga_rumah' : harga_rumah, 'harga_hotel' : harga_hotel, 'sewa_tanah' : sewa_tanah, 'sewa_rumah' : sewa_rumah, 'sewa_hotel' : sewa_hotel, 'status_kepemilikan' : status_kepemilikan}
 print()
-print("Halo! Selamat Datang di Permainan 'Simple Monopoly' by Muhammad Alfarizi Tazkia!")
+print("Hello! Welcome to the 'Simple Monopoly' Game by Muhammad Alfarizi Tazkia!")
 print()
-jumlah_pemain = int(input("Masukan Jumlah Pemain : "))
+jumlah_pemain = int(input("Enter the Number of Players: "))
 sisa_pemain = jumlah_pemain
-print("Baik, {} pemain siap memasuki dunia monopoli ini!". format(jumlah_pemain))
+print("Great, {} players are ready to enter this monopoly world!".format(jumlah_pemain))
 
 print()
 
 for index in range(jumlah_pemain):
-    nama_pemain = input("Masukan Nama Pemain {} : ".format(str(index+1)))
+    nama_pemain = input("Enter Player {}'s Name: ".format(str(index+1)))
     total_kekayaan_awal = 200000000
     aset = {}
     posisi_awal = 0
@@ -113,20 +113,21 @@ for index in range(jumlah_pemain):
     data_pemain[nama_pemain]['kekayaan'] = total_kekayaan_awal
     data_pemain[nama_pemain]['asset'] = aset
     data_pemain[nama_pemain]['posisi'] = posisi_awal
-    data_pemain[nama_pemain]['status'] = 'aktif'
+    data_pemain[nama_pemain]['status'] = 'active'
 
-print("Berikut merupakan data negara beserta harganya")
+print("Here is the list of countries and their prices")
 print(" +{}+".format("-"*51))
-print(" |{:^5}| {:^20} | {:^20} |".format("No", "Negara", "Harga Tanah"))
+print(" |{:^5}| {:^20} | {:^20} |".format("No", "Country", "Land Price"))
 print(" +{}+".format("-"*51))
 for line in data_negara:
     print(" |{:^5}| {:<20} | {:<20} |".format(str(line), data_negara[line]['nama_negara'], str(data_negara[line]['harga_tanah'])))
 print(" +{}+".format("-"*51))
 
 print()
-enter = input("UNTUK MEMULAI PERMAINAN TEKAN ENTER")
+enter = input("PRESS ENTER TO START THE GAME")
 
 selesai = False
+
 
 
 while selesai == False:
@@ -134,23 +135,23 @@ while selesai == False:
         os.system('cls')
         if data_pemain[index]['status'] == 'aktif':
             print()
-            print("GILIRAN {} JALAN ! ".format(index.upper()))
+            print("{}'s TURN TO MOVE! ".format(index.upper()))
             print("------------------------------------------")
-            print("Total Kekayaan Sementara : {} ". format(idr_to_string(data_pemain[index]['kekayaan'])))
-            print("Total Aset : {} Aset".format(str(len(data_pemain[index]['asset']))))
+            print("Current Total Wealth: {} ". format(idr_to_string(data_pemain[index]['kekayaan'])))
+            print("Total Assets: {} Assets".format(str(len(data_pemain[index]['asset']))))
             print()
             if len(data_pemain[index]['asset']) > 0:
-                lihat_asset = input("Ingin melihat daftar aset (y/t)?")
+                lihat_asset = input("Would you like to see your assets list (y/n)?")
                 if lihat_asset.lower() == "y":
                     tampilkan_aset(index, data_pemain, data_negara)
-            jalan = input("ENTER untuk melihat hasil dadu ! ")
+            jalan = input("PRESS ENTER to roll the dice! ")
 
             index_lokasi = pindah_lokasi(data_pemain[index]['posisi'])
 
             if index_lokasi > 30:
                 index_lokasi = index_lokasi - 30
                 data_pemain[index]['kekayaan'] += 20000000
-                print("Anda melewati Start, Anda berhak mendapat komisi sebesar Rp.20.000.000")
+                print("You passed the Start, you are entitled to a bonus of Rp.20.000.000")
 
             negara_terkini = data_negara[index_lokasi]['nama_negara']
             pemilik_negara_terkini = data_negara[index_lokasi]['status_kepemilikan']
@@ -158,79 +159,78 @@ while selesai == False:
             harga_rumah = data_negara[index_lokasi]['harga_rumah']
             harga_hotel = data_negara[index_lokasi]['harga_hotel']
 
-            print("* Anda sekarang berada di --> {}".format(negara_terkini.upper()))
+            print("* You are now in --> {}".format(negara_terkini.upper()))
             data_pemain[index]['posisi'] = index_lokasi
             print()
             if pemilik_negara_terkini == "-":
                 if data_pemain[index]['kekayaan'] - harga_tanah > 0:
-                    beli = input("Apakah Anda ingin membeli TANAH di {} (y/t) ?".format(negara_terkini))
+                    beli = input("Do you want to buy LAND in {} (y/n)?".format(negara_terkini))
                     print()
                     if beli.lower() == "y":
                         data_negara[index_lokasi]['status_kepemilikan'] = index
                         data_pemain[index]['kekayaan'] -= harga_tanah
-                        print("Anda Berhasil membeli tanah di negara {}, sisa kekayaan : {}".format(negara_terkini, idr_to_string(data_pemain[index]['kekayaan'])))
-                        data_pemain[index]['asset'][negara_terkini] ={'rumah' : 0, 'hotel' : 0, 'status' : 'aktif'}
+                        print("You successfully bought land in {}, remaining wealth: {}".format(negara_terkini, idr_to_string(data_pemain[index]['kekayaan'])))
+                        data_pemain[index]['asset'][negara_terkini] ={'rumah' : 0, 'hotel' : 0, 'status' : 'active'}
                 else:
-                    print("Uang anda gacukup untuk membeli aset ini")
+                    print("You don't have enough money to buy this asset.")
                     print()
             elif pemilik_negara_terkini == index:
                 if data_pemain[index]['asset'][negara_terkini]['rumah'] < 4 and data_pemain[index]['kekayaan'] > harga_rumah:
-                    beli_rumah = input("Apakah anda ingin membeli rumah di {} (y/t)?".format(negara_terkini))
+                    beli_rumah = input("Do you want to buy a house in {} (y/n)?".format(negara_terkini))
                     if beli_rumah.lower() == "y":
                         data_pemain[index]['asset'][negara_terkini]['rumah'] += 1
-                        print("ANDA BERHASIL MEMILIKI {} RUMAH DI {} !".format(data_pemain[index]['asset'][negara_terkini]['rumah'], negara_terkini))
+                        print("YOU SUCCESSFULLY OWN {} HOUSES IN {}!".format(data_pemain[index]['asset'][negara_terkini]['rumah'], negara_terkini))
                         data_pemain[index]['kekayaan'] -= harga_rumah
-                        print("Sisa kekayaan : {}".format(idr_to_string(data_pemain[index]['kekayaan'])))
+                        print("Remaining wealth: {}".format(idr_to_string(data_pemain[index]['kekayaan'])))
                 elif data_pemain[index]['asset'][negara_terkini]['rumah'] >= 4 and data_pemain[index]['kekayaan'] > harga_hotel:
-                    beli_hotel = input("Apakah anda ingin membeli hotel di {} (y/t)?".format(negara_terkini))
+                    beli_hotel = input("Do you want to buy a hotel in {} (y/n)?".format(negara_terkini))
                     if beli_hotel.lower() == "y":
                         data_pemain[index]['asset'][negara_terkini]['hotel'] += 1
-                        print("ANDA BERHASIL MEMILIKI {} HOTEL DI {} !".format(data_pemain[index]['asset'][negara_terkini]['hotel'], negara_terkini))
+                        print("YOU SUCCESSFULLY OWN {} HOTELS IN {}!".format(data_pemain[index]['asset'][negara_terkini]['hotel'], negara_terkini))
                         data_pemain[index]['kekayaan'] -= harga_hotel
-                        print("Sisa kekayaan : {}".format(idr_to_string(data_pemain[index]['kekayaan'])))
+                        print("Remaining wealth: {}".format(idr_to_string(data_pemain[index]['kekayaan'])))
             else:
                 print()
-                print("OOPSS anda berkunjung ke wilayah milik {}, anda perlu membayar sewanya".format(pemilik_negara_terkini))
-                enter = input("ENTER UNTUK MELIHAT RINCIANNYA")
+                print("OOPS, you're visiting {}, you need to pay the rent.".format(pemilik_negara_terkini))
+                enter = input("PRESS ENTER TO VIEW DETAILS")
                 biaya_sewa = cek_harga(pemilik_negara_terkini, negara_terkini, index_lokasi, data_pemain, data_negara)
                 print()
-                enter = input("ENTER UNTUK MELAKUKAN PEMBAYARAN")
-                if data_pemain[index]['kekayaan']-biaya_sewa <= 0:
+                enter = input("PRESS ENTER TO MAKE THE PAYMENT")
+                if data_pemain[index]['kekayaan'] - biaya_sewa <= 0:
                     print()
-                    print("Yahh Kamu Bangkrut")
+                    print("Oh no! You're bankrupt!")
                     print()
-                    data_pemain[index]['status'] = 'bangkrut'
+                    data_pemain[index]['status'] = 'bankrupt'
                     sisa_pemain -= 1
                     counter = 1
-                    print("PELEPASAN ASET {}".format(index))
+                    print("ASSET RELEASE OF {}".format(index))
                     print("-----------------------------------")
                     for line in data_negara:
                         if index == data_negara[counter]['status_kepemilikan']:
-                            print("{:<15} - Dijual Ke Bank".format(data_negara[counter]['nama_negara']))
+                            print("{:<15} - Sold to the Bank".format(data_negara[counter]['nama_negara']))
                             data_negara[counter]['status_kepemilikan'] = "-"
                         counter += 1
                 else:
                     print("{} - {} : {}".format(str(data_pemain[index]['kekayaan']), str(biaya_sewa), str(data_pemain[index]['kekayaan'] - biaya_sewa)))
                     data_pemain[index]['kekayaan'] -= biaya_sewa
                     print()
-                    print("SISA KEKAYAAN {} : {}".format(index, idr_to_string(data_pemain[index]['kekayaan'])))
+                    print("REMAINING WEALTH OF {}: {}".format(index, idr_to_string(data_pemain[index]['kekayaan'])))
 
                 print()
                 kekayaan_pemilik_negara_before = data_pemain[pemilik_negara_terkini]['kekayaan']
                 data_pemain[pemilik_negara_terkini]['kekayaan'] += biaya_sewa
-                print("Kekayaan {} saat ini : {} + {} = {}".format(pemilik_negara_terkini, str(kekayaan_pemilik_negara_before), str(biaya_sewa), idr_to_string(data_pemain[pemilik_negara_terkini]['kekayaan'])))
+                print("The current wealth of {}: {} + {} = {}".format(pemilik_negara_terkini, str(kekayaan_pemilik_negara_before), str(biaya_sewa), idr_to_string(data_pemain[pemilik_negara_terkini]['kekayaan'])))
 
             print()
-            enter = input("ENTER UNTUK MELANJUTKAN")
+            enter = input("PRESS ENTER TO CONTINUE")
 
         if sisa_pemain == 1:
             os.system('cls')
             print()
-            print("--- PERMAINAN SELESAI ---")
+            print("--- GAME OVER ---")
             print()
             for nama_pemenang in data_pemain:
-                if data_pemain[nama_pemenang]['status'] == 'aktif':
+                if data_pemain[nama_pemenang]['status'] == 'active':
                     pemenang = nama_pemenang
-            print("Pemenang : {} ".format(pemenang))
+            print("Winner: {} ".format(pemenang))
             selesai = True
-
